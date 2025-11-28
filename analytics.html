@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics PM Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-white hidden md:flex flex-col shadow-xl z-20">
+        <div class="h-16 flex items-center justify-center border-b border-slate-700 bg-slate-800">
+            <img src="/static/aset/pngwing.com.png" 
+            alt="Logo Perusahaan" 
+            class="h-12 w-auto aspect-[4/3] object-cover rounded shadow-sm">
+            <h1 class="text-xl font-bold tracking-wider text-red-600">TELKOM<br><span class="text-white">INDONESIA</span></h1>
+        </div>
+
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="/static/home.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-xl transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <span>Home</span>
+            </a>
+
+            <a href="/static/index.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-xl transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 bg-indigo-600 rounded-xl text-white shadow-lg transition-transform transform hover:scale-105">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                <span class="font-medium">Analytics</span>
+            </a>
+
+            <div class="pt-4 mt-2 border-t border-slate-700"></div>
+
+            <button onclick="initApp()" class="w-full flex items-center justify-center gap-2 bg-white text-gray-800 px-4 py-3 rounded-xl transition-all shadow-md hover:bg-gray-200 font-semibold text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Refresh Data
+            </button>
+        </nav>
+
+        <div class="p-4 bg-slate-950 border-t border-slate-800">
+            <div class="flex items-center gap-3">
+                <div>
+                    <p class="text-xs text-slate-400">admin@telkom.co.id</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-screen overflow-hidden">
+        <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-10">
+            <button class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+
+            <div class="flex flex-col">
+                <h2 class="text-4xs text-gray-800">Dashboard Project Manajemen</h2>
+                <h3 class="text-4xs font-bold text-gray-800">Telkom Indonesia</h3>
+            </div>
+
+            <img src="/static/aset/logo_goace.png" 
+            alt="Logo Perusahaan" 
+            class="h-14 w-auto aspect-video object-cover rounded shadow-sm">
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50/50">
+            <div class="max-w-7xl mx-auto space-y-6">
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Tahun</label>
+                        <select id="filterTahun" class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg"></select>
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Bulan</label>
+                        <select id="filterBulan" class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg">
+                            <option value="">Semua Bulan</option>
+                            <option value="1">Januari</option>
+                            <option value="2">Februari</option>
+                            <option value="3">Maret</option>
+                            <option value="4">April</option>
+                            <option value="5">Mei</option>
+                            <option value="6">Juni</option>
+                            <option value="7">Juli</option>
+                            <option value="8">Agustus</option>
+                            <option value="9">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Witel</label>
+                        <select id="filterWitel" class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg"></select>
+                    </div>
+                </div>
+
+                <div id="analyticsLoader" class="hidden h-96 flex flex-col items-center justify-center">
+                    <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600 mb-4"></div>
+                    <p class="text-gray-500 font-semibold animate-pulse">Sedang menganalisis data...</p>
+                </div>
+
+                <div id="analyticsContent" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h3 class="text-lg font-bold text-gray-700 mb-4">Total Nilai BC (Revenue)</h3>
+                        <div class="relative h-80 w-full">
+                            <canvas id="barChartRevenue"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <h3 class="text-lg font-bold text-gray-700 mb-2">Dokumen Type</h3>
+                            <div class="relative h-48 w-full flex justify-center">
+                                <canvas id="pieChartBast"></canvas>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <h3 class="text-lg font-bold text-gray-700 mb-2">PROVCOMP - BILCOMP</h3>
+                            <div class="relative h-48 w-full flex justify-center">
+                                <canvas id="pieChartStatus"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/ui.js"></script>
+    <script src="/static/js/app.js"></script>
+
+</body>
+</html>
