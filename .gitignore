@@ -1,0 +1,13 @@
+# Abaikan folder virtual environment
+venv/
+env/
+.env
+
+# Abaikan file cache python
+__pycache__/
+*.pyc
+
+# PENTING: Abaikan file kunci rahasia Google
+service_account.json
+credentials.json
+*.json
